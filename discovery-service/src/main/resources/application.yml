@@ -1,1 +1,18 @@
-spring.application.name=discovery-service
+spring:
+  application:
+    name: discovery-service
+
+server:
+  port: 8761 # Default port for Eureka Server	
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false # Eureka server does not register itself
+    fetchRegistry: false # No need to fetch registry
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: true # Prevents services from being removed during network issues
+

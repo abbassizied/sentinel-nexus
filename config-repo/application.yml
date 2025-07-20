@@ -1,8 +1,28 @@
+# shared config
+
 global:
   params:
     p1: 555
     p2: 777
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 
+        - health
+        - info
+        - metrics
+        - prometheus
+        - loggers
+        - httptrace
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ # Eureka Server URL
+  instance:
+    prefer-ip-address: true
 
 
 

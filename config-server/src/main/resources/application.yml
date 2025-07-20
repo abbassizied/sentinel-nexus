@@ -8,7 +8,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/abbassizied/sentinel-nexus/config-repo
+          uri: https://github.com/abbassizied/sentinel-nexus/config-repo # Location of config server
+          clone-on-start: true
 
 
  

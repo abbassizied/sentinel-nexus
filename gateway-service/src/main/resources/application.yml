@@ -1,1 +1,29 @@
-spring.application.name=gateway-service
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+      # Route for service-a
+      - id: service_a_route
+        uri: lb://service-a
+        predicates:
+          - Path=/api/service-a/**
+      # Route for service-b
+      - id: service_b_route
+        uri: lb://service-b
+        predicates:
+          - Path=/api/service-b/**
+
+    config:
+      enabled: false
+
+    discovery:
+      enabled: true
+

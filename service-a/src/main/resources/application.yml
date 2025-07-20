@@ -1,1 +1,12 @@
-spring.application.name=service-a
+spring:
+  application:
+    name: service-a
+  cloud:
+    config:
+      enabled: true
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+
+
+
