@@ -7,31 +7,29 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      # Optional: if you prefer static routes instead of dynamic discovery
-      routes:
-        - id: service_a_route
-          uri: lb://service-a
-          predicates:
-            - Path=/api/service-a/**
-          filters:
-            - RewritePath=/api/service-a/(?<remaining>.*), /${remaining}
-
-        - id: service_b_route
-          uri: lb://service-b
-          predicates:
-            - Path=/api/service-b/**
-          filters:
-            - RewritePath=/api/service-b/(?<remaining>.*), /${remaining}
+      server:
+        webflux:
+          routes:
+            - id: service_a_route
+              uri: lb://service-a
+              predicates:
+                - Path=/api/service-a/**
+            - id: service_b_route
+              uri: lb://service-b
+              predicates:
+                - Path=/api/service-b/**
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
     config:
-      enabled: false
+      enabled: true
 
     discovery:
       enabled: true
 
+  config:
+    import: "optional:configserver:http://localhost:8888"
 
 
