@@ -11,13 +11,13 @@ and full observability stack (Prometheus, Grafana, Loki, Jaeger)*
 ```
 # io.github.abbassizied
 sentinel-nexus/ (root project - monorepo)
-├── config-server/
-├── gateway-service/
-├── discovery-service/
-├── service-a/
+├── config-server/   # Centralized config management (optional)
+├── gateway-service/ # API gateway (entry point for requests)
+├── discovery-service/ # Eureka service registry
+├── service-a/ # Business logic microservice
 ├── service-b/
 ├── frontend/
-├── docker-compose/
+├── docker/
 │   ├── keycloak-setup/
 ├── compose.yml
 ├── README.md
@@ -41,11 +41,11 @@ sentinel-nexus/ (root project - monorepo)
 	- Full observability stack
 	- Dependent databases (PostgreSQL for Keycloak)
 
-4. Projects dependencies: 
-	- Config Server: `Config Server`, 
-	- Gateway: `Gateway`, `Config Client`, `OAuth2 Client`
-	- Service discovery: 
-	- Services ( service-a, service-b): `Web`, `Actuator`, `Config Client`, `OAuth2 Resource Server`
+4. 🧩 Project dependencies by Service: 
+	- Config Server: `spring-cloud-config-server`, `spring-boot-starter-web` 
+	- Gateway: `spring-cloud-starter-gateway`, `spring-cloud-starter-netflix-eureka-client`, `OAuth2 Client`
+	- Service discovery: `spring-cloud-starter-netflix-eureka-server`, `spring-boot-starter-web`  
+	- Services ( service-a, service-b): `spring-boot-starter-web`, `spring-cloud-starter-netflix-eureka-client`, optional: JPA, actuator, etc.
 
 ## Technology Integration Plan:
 
