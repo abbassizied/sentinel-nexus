@@ -4,6 +4,8 @@ and full observability stack (Prometheus, Grafana, Loki, Jaeger)*
 
 > (Meaning: "Sentinel" represents security (Keycloak) and monitoring (observability stack), "Nexus" represents the central connection point (API Gateway) and service integration)
 
+---
+
 ## GitHub Repository Structure:
 
 - Submodules: config-server, gateway-service, discovery-service, service-a, service-b 
@@ -22,6 +24,55 @@ sentinel-nexus/ (root project - monorepo)
 ├── compose.yml
 ├── README.md
 ```
+
+## 
+
+- Start services in order:
+	- Start **Config Server** first
+	- Start **Eureka Server** (discovery-service) next
+	- Start **Service-A** and **Service-B**
+	- Finally, start **Gateway** last
+
+## Running a Spring Boot Submodule from the Root Folder
+
+### Option 1: Build and Run the JAR
+
+```sh
+# First build the entire project
+mvn clean install -DskipTests
+
+# Then run the specific module's JAR
+java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar
+java -jar discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar
+java -jar service-a/target/service-a-0.0.1-SNAPSHOT.jar
+java -jar service-b/target/service-b-0.0.1-SNAPSHOT.jar
+java -jar gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar
+```
+
+### Option 2: Using Maven from the Root Directory
+
+```sh
+# From the root directory (where the parent pom.xml is located)
+
+# For config-server
+mvn spring-boot:run -pl config-server 
+
+# For discovery-service
+mvn spring-boot:run -pl discovery-service 
+
+# For service-a
+mvn spring-boot:run -pl service-a
+
+# For service-b
+mvn spring-boot:run -pl service-b
+
+# For gateway-service
+mvn spring-boot:run -pl gateway-service
+```
+- **-pl** specifies the project (module) to run
+- This will automatically handle dependencies between modules
+
+---
 
 ## Component Details:
 
