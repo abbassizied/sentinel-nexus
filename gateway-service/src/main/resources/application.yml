@@ -7,29 +7,29 @@ spring:
 
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: service_a_route
-              uri: lb://SERVICE-A  # Uppercase to match Eureka
-              predicates:
-                - Path=/api/service-a/**
-            - id: service_b_route
-              uri: lb://SERVICE-B  # Uppercase to match Eureka
-              predicates:
-                - Path=/api/service-b/**
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
+      discovery:
+        locator:
+          enabled: true # Flag that enables DiscoveryClient gateway integration
+          lower-case-service-id: true # Option to lower case serviceId in predicates and filters, defaults to false. Useful with eureka when it automatically uppercases serviceId. so MYSERIVCE, would match /myservice/**
 
-    config:
-      enabled: true
-
+      routes:
+        - id: service_a_route
+          uri: lb://SERVICE-A  # Uppercase to match Eureka
+          predicates:
+          - Path=/service-a/**
+        - id: service_b_route
+          uri: lb://SERVICE-B # Uppercase to match Eureka
+          predicates:
+          - Path=/service-b/**
     discovery:
       enabled: true
+    config:
+      enabled: false
 
-  config:
-    import: "optional:configserver:http://localhost:8888"
 
-
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  # Eureka Server URL
+  instance:
+    prefer-ip-address: true

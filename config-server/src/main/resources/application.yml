@@ -9,12 +9,9 @@ spring:
       server:
         git:
           uri: https://github.com/abbassizied/sentinel-nexus # Location of config server
+          default-label: main
           search-paths: config-repo
-          clone-on-start: true
-
 
  
-
-
 
 

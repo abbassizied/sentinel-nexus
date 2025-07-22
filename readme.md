@@ -25,9 +25,9 @@ sentinel-nexus/ (root project - monorepo)
 ├── README.md
 ```
 
-## 
+## Service Startup Order
 
-- Start services in order:
+- To ensure proper functionality, please start the services in the following sequence:
 	- Start **Config Server** first
 	- Start **Eureka Server** (discovery-service) next
 	- Start **Service-A** and **Service-B**
@@ -124,23 +124,32 @@ mvn spring-boot:run -pl gateway-service
 
 ---
 
-## Test apis
+## API Endpoints for Testing
 
+- Here's a breakdown of the API endpoints available for testing, categorized by access method:
 ```
+###################################
+### Via API Gateway (Port 8080) ###
+###################################
+
+# Service A:
 http://localhost:8080/api/service-a/props
 http://localhost:8080/api/service-a/config-maps
- 
+
+# Service B:
 http://localhost:8080/api/service-b/props
 http://localhost:8080/api/service-b/config-maps
 http://localhost:8080/api/service-b/products
 
-################
-### Direct access
-################
+#############################
+### Direct Service Access ###
+#############################
 
+# Service A (Port 8081):
 http://localhost:8081/service-a/props
 http://localhost:8081/service-a/config-maps
- 
+
+# Service B (Port 8082):
 http://localhost:8082/service-b/props
 http://localhost:8082/service-b/config-maps
 http://localhost:8082/service-b/products

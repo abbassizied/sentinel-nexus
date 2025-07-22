@@ -1,12 +1,15 @@
 spring:
   application:
     name: service-a
-  cloud:
-    config:
-      enabled: true
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
 
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ # Eureka Server URL
+  instance:
+    prefer-ip-address: true
 
 
