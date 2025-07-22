@@ -146,13 +146,13 @@ http://localhost:8080/api/service-b/products
 #############################
 
 # Service A (Port 8081):
-http://localhost:8081/service-a/props
-http://localhost:8081/service-a/config-maps
+http://localhost:8081/props
+http://localhost:8081/config-maps
 
 # Service B (Port 8082):
-http://localhost:8082/service-b/props
-http://localhost:8082/service-b/config-maps
-http://localhost:8082/service-b/products
+http://localhost:8082/props
+http://localhost:8082/config-maps
+http://localhost:8082/products
 ```
  
 

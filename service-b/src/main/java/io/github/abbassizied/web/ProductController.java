@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import io.github.abbassizied.models.Product;
 
 @RestController
-@RequestMapping("/service-b/products")
+@RequestMapping("/products")
 public class ProductController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
