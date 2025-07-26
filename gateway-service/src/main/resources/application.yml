@@ -2,13 +2,13 @@ spring:
   application:
     name: api-gateway
   config:
-    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+    import: optional:configserver:http://localhost:8888/
 
   cloud:
     gateway:
       routes:
         - id: service_a_route
-          uri: lb://SERVICE-A  # Uppercase to match Eureka
+          uri: lb://SERVICE-A # Uppercase to match Eureka
           predicates:
             - Path=/api/service-a/**
           filters:
@@ -24,6 +24,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-
-
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true

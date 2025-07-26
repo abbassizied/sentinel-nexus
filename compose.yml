@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   config-server:
     build: ./config-server/
@@ -12,11 +14,16 @@ services:
       timeout: 5s
       retries: 10
     ports:
-     - 8888:8888
+      - 8888:8888
+    networks:
+      - sentinel_nexus_networkservices
 
   discovery-service:
     build: ./discovery-service/
     container_name: discovery-service
+    environment:
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     deploy:
       resources:
         limits:
@@ -30,13 +37,16 @@ services:
       config-server:
         condition: service_healthy
     ports:
-     - 8761:8761
+      - 8761:8761
+    networks:
+      - sentinel_nexus_networkservices
 
-  gateway-service :
+  gateway-service:
     build: ./gateway-service/
     container_name: gateway-service
     environment:
-      EUREKA_INSTANCE_HOSTNAME: discovery-service
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     deploy:
       resources:
         limits:
@@ -47,13 +57,16 @@ services:
       discovery-service:
         condition: service_healthy
     ports:
-     - 8080:8080
+      - 8080:8080
+    networks:
+      - sentinel_nexus_networkservices
 
   service-a:
     build: ./service-a/
     container_name: service-a
     environment:
-      EUREKA_INSTANCE_HOSTNAME: discovery-service
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     deploy:
       resources:
         limits:
@@ -64,13 +77,16 @@ services:
       discovery-service:
         condition: service_healthy
     ports:
-    - 8081:8081
+      - 8081:8081
+    networks:
+      - sentinel_nexus_networkservices
 
   service-b:
     build: ./service-b/
     container_name: service-b
     environment:
-      EUREKA_INSTANCE_HOSTNAME: discovery-service
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     deploy:
       resources:
         limits:
@@ -81,8 +97,10 @@ services:
       discovery-service:
         condition: service_healthy
     ports:
-    - 8082:8082
+      - 8082:8082
+    networks:
+      - sentinel_nexus_networkservices
 
-
-
-
+networks:
+  sentinel_nexus_networkservices:
+    driver: bridge

@@ -13,6 +13,12 @@ and full observability stack (Prometheus, Grafana, Loki, Jaeger)*
 - [abbassizied/ams-ms-on-k8s](https://github.com/abbassizied/ams-ms-on-k8s)
 - [abbassizied/ams-ms](https://github.com/abbassizied/ams-ms)
 
+- [spring-petclinic/spring-petclinic-microservices-config](https://github.com/spring-petclinic/spring-petclinic-microservices-config) +  [spring-petclinic/spring-petclinic-microservices](https://github.com/spring-petclinic/spring-petclinic-microservices/tree/main) + [spring-petclinic/spring-petclinic-cloud](https://github.com/spring-petclinic/spring-petclinic-cloud)
+
+- [mohamedYoussfi/micro-services-app](https://github.com/mohamedYoussfi/micro-services-app)
+- [mohamedYoussfi/observability-spring-grafana](https://github.com/mohamedYoussfi/observability-spring-grafana)
+
+
 ## GitHub Repository Structure:
 
 - Submodules: config-server, gateway-service, discovery-service, service-a, service-b 
