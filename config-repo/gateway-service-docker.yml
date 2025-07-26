@@ -5,9 +5,9 @@ server:
     mime-types: application/json,text/css,application/javascript
     min-response-size: 2048
 
-spring:
-  config:
-    import: optional:configserver:http://config-server:8888/
+#spring:
+#  config:
+#    import: optional:configserver:http://config-server:8888/
 
 eureka:
   client:

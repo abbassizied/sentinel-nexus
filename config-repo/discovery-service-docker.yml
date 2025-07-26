@@ -1,9 +1,9 @@
 server:
   port: 8761 # Default port for Eureka Server
 
-spring:
-  config:
-    import: optional:configserver:http://config-server:8888/
+#spring:
+#  config:
+#    import: optional:configserver:http://config-server:8888/
 
 eureka:
   # standalone mode
