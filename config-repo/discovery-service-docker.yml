@@ -1,16 +1,3 @@
 server:
   port: 8761 # Default port for Eureka Server
 
-#spring:
-#  config:
-#    import: optional:configserver:http://config-server:8888/
-
-eureka:
-  # standalone mode
-  client:
-    registerWithEureka: false # Eureka server does not register itself
-    fetchRegistry: false # No need to fetch registry
-    serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
-  server:
-    enable-self-preservation: true # Prevents services from being removed during network issues

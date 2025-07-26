@@ -6,6 +6,9 @@ spring:
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
       routes:
         - id: service_a_route
           uri: lb://SERVICE-A # Uppercase to match Eureka
