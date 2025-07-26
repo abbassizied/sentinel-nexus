@@ -5,6 +5,7 @@ services:
   config-server:
     build: ./config-server/
     container_name: config-server
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -22,6 +23,7 @@ services:
   discovery-service:
     build: ./discovery-service/
     container_name: discovery-service
+    restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
@@ -44,6 +46,7 @@ services:
   gateway-service:
     build: ./gateway-service/
     container_name: gateway-service
+    restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
@@ -63,6 +66,7 @@ services:
   service-a:
     build: ./service-a/
     container_name: service-a
+    restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
@@ -82,6 +86,7 @@ services:
   service-b:
     build: ./service-b/
     container_name: service-b
+    restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
