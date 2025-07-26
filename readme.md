@@ -6,6 +6,13 @@ and full observability stack (Prometheus, Grafana, Loki, Jaeger)*
 
 ---
 
+## Refs:
+
+- [abbassizied/ams-ms-k8s-ziedab](https://github.com/abbassizied/ams-ms-k8s-ziedab/tree/main)
+- [abbassizied/ams-ms-docker-compose-ziedab](https://github.com/abbassizied/ams-ms-docker-compose-ziedab)
+- [abbassizied/ams-ms-on-k8s](https://github.com/abbassizied/ams-ms-on-k8s)
+- [abbassizied/ams-ms](https://github.com/abbassizied/ams-ms)
+
 ## GitHub Repository Structure:
 
 - Submodules: config-server, gateway-service, discovery-service, service-a, service-b 

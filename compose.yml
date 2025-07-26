@@ -35,6 +35,8 @@ services:
   gateway-service :
     build: ./gateway-service/
     container_name: gateway-service
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: discovery-service
     deploy:
       resources:
         limits:
@@ -50,6 +52,8 @@ services:
   service-a:
     build: ./service-a/
     container_name: service-a
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: discovery-service
     deploy:
       resources:
         limits:
@@ -65,6 +69,8 @@ services:
   service-b:
     build: ./service-b/
     container_name: service-b
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: discovery-service
     deploy:
       resources:
         limits:
