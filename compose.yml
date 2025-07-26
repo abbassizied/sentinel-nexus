@@ -55,6 +55,11 @@ services:
       resources:
         limits:
           memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://service-a:8081/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     depends_on:
       config-server:
         condition: service_healthy
@@ -76,6 +81,11 @@ services:
       resources:
         limits:
           memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://service-b:8082/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     depends_on:
       config-server:
         condition: service_healthy
@@ -115,13 +125,11 @@ services:
 ############## Security ######################
 ##############################################
 
-
 ##############################################
 ############## Observability #################
 ##############################################
 
-
-############################################## 
+##############################################
 ##############################################
 
 networks:
