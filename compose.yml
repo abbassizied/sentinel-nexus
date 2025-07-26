@@ -44,27 +44,6 @@ services:
     networks:
       - sentinel_nexus_networkservices
 
-  gateway-service:
-    build: ./gateway-service/
-    container_name: gateway-service
-    restart: unless-stopped
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-    depends_on:
-      config-server:
-        condition: service_healthy
-      discovery-service:
-        condition: service_healthy
-    ports:
-      - 8080:8080
-    networks:
-      - sentinel_nexus_networkservices
-
   service-a:
     build: ./service-a/
     container_name: service-a
@@ -106,6 +85,44 @@ services:
       - 8082:8082
     networks:
       - sentinel_nexus_networkservices
+
+  gateway-service:
+    build: ./gateway-service/
+    container_name: gateway-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      service-a:
+        condition: service_healthy
+      service-b:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    networks:
+      - sentinel_nexus_networkservices
+
+##############################################
+############## Security ######################
+##############################################
+
+
+##############################################
+############## Observability #################
+##############################################
+
+
+############################################## 
+##############################################
 
 networks:
   sentinel_nexus_networkservices:
