@@ -3,3 +3,20 @@ spring:
     name: api-gateway
   config:
     import: optional:configserver:http://localhost:8888/
+
+  cloud:
+    gateway:
+      routes:
+        - id: service_a_route
+          uri: lb://SERVICE-A # Uppercase to match Eureka
+          predicates:
+            - Path=/api/service-a/**
+          filters:
+            - StripPrefix=2
+
+        - id: service_b_route
+          uri: lb://SERVICE-B # Uppercase to match Eureka
+          predicates:
+            - Path=/api/service-b/**
+          filters:
+            - StripPrefix=2

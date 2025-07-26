@@ -5,23 +5,6 @@ server:
     mime-types: application/json,text/css,application/javascript
     min-response-size: 2048
 
-  cloud:
-    gateway:
-      routes:
-        - id: service_a_route
-          uri: lb://SERVICE-A # Uppercase to match Eureka
-          predicates:
-            - Path=/api/service-a/**
-          filters:
-            - StripPrefix=2
-
-        - id: service_b_route
-          uri: lb://SERVICE-B # Uppercase to match Eureka
-          predicates:
-            - Path=/api/service-b/**
-          filters:
-            - StripPrefix=2
-
 eureka:
   client:
     service-url:
