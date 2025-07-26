@@ -13,3 +13,13 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"

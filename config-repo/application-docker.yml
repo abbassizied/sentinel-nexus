@@ -25,3 +25,8 @@ global:
   params:
     p1: 555
     p2: 777
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: WARN
