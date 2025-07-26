@@ -1,5 +1,6 @@
-version: '3.9'
-
+##############################################
+############## Core Services #################
+##############################################
 services:
   config-server:
     build: ./config-server/
@@ -22,8 +23,7 @@ services:
     build: ./discovery-service/
     container_name: discovery-service
     environment:
-      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
     deploy:
       resources:
         limits:
@@ -45,8 +45,7 @@ services:
     build: ./gateway-service/
     container_name: gateway-service
     environment:
-      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
     deploy:
       resources:
         limits:
@@ -65,8 +64,7 @@ services:
     build: ./service-a/
     container_name: service-a
     environment:
-      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
     deploy:
       resources:
         limits:
@@ -85,8 +83,7 @@ services:
     build: ./service-b/
     container_name: service-b
     environment:
-      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888/
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_PROFILES_ACTIVE: docker
     deploy:
       resources:
         limits:

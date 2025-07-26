@@ -175,3 +175,15 @@ http://localhost:8082/products
 - 
 
 ---
+
+## 🧪 Rebuild Images (just in case)
+
+If you’ve previously built with bad config, rebuild:
+
+```bash
+docker-compose down -v --remove-orphans
+docker-compose build --no-cache
+docker-compose up
+```
+
+---

@@ -11,7 +11,3 @@ spring:
           uri: https://github.com/abbassizied/sentinel-nexus # Location of config server
           default-label: main
           search-paths: config-repo
-
- 
-
-
