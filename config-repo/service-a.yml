@@ -1,12 +1,6 @@
 server:
   port: 8081
 
-spring:
-  application:
-    name: service-a
-  config:
-    import: optional:configserver:http://localhost:8888/
-
 eureka:
   client:
     serviceUrl:
