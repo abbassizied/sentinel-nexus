@@ -12,14 +12,14 @@ spring:
     gateway:
       routes:
         - id: service_a_route
-          uri: http://service-a:8081
+          uri: http://SERVICE-A:8081
           predicates:
             - Path=/api/service-a/**
           filters:
             - StripPrefix=2
 
         - id: service_b_route
-          uri: http://service-b:8082
+          uri: http://SERVICE-B:8082
           predicates:
             - Path=/api/service-b/**
           filters:
