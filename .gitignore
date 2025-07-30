@@ -1,0 +1,35 @@
+# Common build and IDE files
+**/target/
+**/.idea/
+**/.settings/
+**/.project
+**/.classpath
+**/.factorypath
+**/.springBeans
+**/.sts4-cache/
+bin/
+build/
+out/
+*.iml
+*.ipr
+*.iws
+
+# Logs
+**/*.log
+**/logs/
+
+# Environment files
+.env
+**/.env*
+**/*.env
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Code coverage and test reports
+**/jacoco.exec
+**/jacoco-report/
+**/surefire-reports/
+**/failsafe-reports/
+**/test-results/

@@ -1,0 +1,26 @@
+#############################################################
+############ Stage 1: Build the application #################
+#############################################################
+FROM maven:3.9.11-eclipse-temurin-21 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+# Download dependencies (faster rebuilds when only code changes)
+RUN mvn dependency:go-offline -pl config-server
+
+# Build the specific submodule
+RUN mvn package -pl config-server -am -DskipTests
+
+#############################################################
+############ Stage 2: Run the application  ##################
+#############################################################
+FROM eclipse-temurin:21.0.7_6-jdk
+WORKDIR /app
+COPY --from=builder /app/config-server/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]
+#############################################################
+#############################################################
+#############################################################

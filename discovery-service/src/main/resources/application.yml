@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: discovery-service
+
+server:
+  port: 8761 # Default port for Eureka Server
+
+eureka:
+  instance:
+    hostname: localhost
+  # standalone mode
+  client:
+    registerWithEureka: false # Eureka server does not register itself
+    fetchRegistry: false # No need to fetch registry
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}

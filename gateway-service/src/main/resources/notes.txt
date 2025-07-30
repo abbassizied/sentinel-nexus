@@ -1,0 +1,102 @@
+###########################################################
+# ✅ Common Configuration (shared by both options)
+###########################################################
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json,text/css,application/javascript
+    min-response-size: 2048
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888/
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: false
+
+eureka:
+  instance:
+    prefer-ip-address: true  # Use IP instead of hostname
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+###########################################################
+# ✅ Option 1: Dynamic Routes (Eureka Service Discovery)
+#    Access with: /service-a/**, /service-b/**, etc.
+###########################################################
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+###########################################################
+# ✅ Option 2: Static Routes (Manual Routing)
+#    Use this if not using Eureka or want fine-grained control
+###########################################################
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      routes:
+        - id: service_a_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/service-a/**
+          filters:
+            - StripPrefix=1
+
+        - id: service_b_route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/service-b/**
+          filters:
+            - StripPrefix=1
+###########################################################
+###########################################################
+          globalcors:
+            corsConfigurations:
+              '[/**]':
+                allowedOriginPatterns: '*' # Use patterns instead of origins
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                allowedHeaders: '*'
+                allowCredentials: false  # Must be false when using patterns/wildcard
+###########################################################
+###########################################################
+
+
+
+
+###########################################################
+###########################################################

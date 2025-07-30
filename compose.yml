@@ -1,0 +1,143 @@
+##############################################
+############## Core Services #################
+##############################################
+services:
+  config-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.config-server
+    container_name: config-server
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-I", "http://config-server:8888"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 8888:8888
+    networks:
+      - microservices-net
+
+  discovery-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.discovery-service
+    container_name: discovery-service
+    restart: unless-stopped
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://discovery-service:8761"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    networks:
+      - microservices-net
+
+  service-a:
+    build:
+      context: .
+      dockerfile: Dockerfile.service-a
+    container_name: service-a
+    restart: unless-stopped
+    environment:
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://service-a:8081/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    networks:
+      - microservices-net
+
+  service-b:
+    build:
+      context: .
+      dockerfile: Dockerfile.service-b
+    container_name: service-b
+    restart: unless-stopped
+    environment:
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://service-b:8082/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - 8082:8082
+    networks:
+      - microservices-net
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway-service
+    container_name: gateway-service
+    restart: unless-stopped
+    environment:
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://gateway-service:8989/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+      service-a:
+        condition: service_healthy
+      service-b:
+        condition: service_healthy
+    ports:
+      - 8989:8989
+    networks:
+      - microservices-net
+
+##############################################
+##############################################
+
+networks:
+  microservices-net:
+    driver: bridge
