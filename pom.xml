@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>io.github.abbassizied</groupId>
@@ -11,16 +10,19 @@
 	<name>Sentinel Nexus</name>
 	<description>Root Project - Secure Microservices Observatory</description>
 
+	<!-- Project URL -->
+	<url>https://github.com/abbassizied/sentinel-nexus</url>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.3</version>
+		<version>3.5.4</version>
 		<relativePath />
 	</parent>
 
 	<properties>
 		<java.version>21</java.version>
-		<spring-boot.version>3.5.3</spring-boot.version>
+		<spring-boot.version>3.5.4</spring-boot.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -36,6 +38,7 @@
 		<module>config-server</module>
 		<module>service-a</module>
 		<module>service-b</module>
+		<module>secured-service</module>
 	</modules>
 
 	<dependencyManagement>

@@ -24,3 +24,7 @@ spring:
           uri: lb://service-b
           predicates:
             - Path=/service-b/** # Matches `/service-b/...`
+        - id: secured-service
+          uri: lb://secured-service
+          predicates:
+            - Path=/secured-service/** # Matches `/secured-service/...`

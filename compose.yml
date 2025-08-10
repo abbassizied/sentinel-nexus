@@ -105,6 +105,34 @@ services:
     networks:
       - microservices-net
 
+  secured-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.secured-service
+    container_name: secured-service
+    restart: unless-stopped
+    environment:
+      SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://secured-service:8083/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
+    ports:
+      - 8083:8083
+    networks:
+      - microservices-net
+
   gateway-service:
     build:
       context: .
@@ -170,7 +198,7 @@ services:
   keycloakdb:
     image: postgres:15.6
     volumes:
-      - ./docker/postgres_data:/var/lib/postgresql/data
+      - ./docker/keycloak_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak

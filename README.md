@@ -21,20 +21,33 @@ and full observability stack (Prometheus, Grafana, Loki, Jaeger)*
 
 ## GitHub Repository Structure:
 
-- Submodules: config-server, gateway-service, discovery-service, service-a, service-b 
+- Submodules: config-server, gateway-service, discovery-service, service-a, service-b, secured-service
+- Other services: angular-frontend, react-frontend  
 
 ```
 # io.github.abbassizied
 sentinel-nexus/ (root project - monorepo)
+├── docker/
+│   ├── keycloak-setup/
 ├── config-server/   # Centralized config management (optional)
 ├── gateway-service/ # API gateway (entry point for requests)
 ├── discovery-service/ # Eureka service registry
-├── service-a/ # Business logic microservice
-├── service-b/
-├── frontend/
-├── docker/
-│   ├── keycloak-setup/
+│   ### Business logic microservice ###
+├── service-a/ # port: 8081 
+├── service-b/ # port: 8082
+├── secured-service/ # port: 8083
+├── angular-frontend/ # port: 4200
+├── react-frontend/ # port: 3000
 ├── compose.yml
+│   ### Docker files ###
+├── Dockerfile.config-server  
+├── Dockerfile.discovery-service 
+├── Dockerfile.gateway-service 
+├── Dockerfile.service-a 
+├── Dockerfile.service-b
+├── Dockerfile.secured-service
+├── Dockerfile.angular-frontend
+├── Dockerfile.react-frontend
 ├── README.md
 ```
 
@@ -43,7 +56,7 @@ sentinel-nexus/ (root project - monorepo)
 - To ensure proper functionality, please start the services in the following sequence:
 	- Start **Config Server** first
 	- Start **Eureka Server** (discovery-service) next
-	- Start **Service-A** and **Service-B**
+	- Start **Service-A**, **Service-B** and **secured-service**
 	- Finally, start **Gateway** last
 
 ## How to Clean & Update Dependencies in a Spring Boot Multi-Module Project
@@ -75,6 +88,7 @@ java -jar config-server/target/config-server-0.0.1-SNAPSHOT.jar
 java -jar discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar
 java -jar service-a/target/service-a-0.0.1-SNAPSHOT.jar
 java -jar service-b/target/service-b-0.0.1-SNAPSHOT.jar
+java -jar service-b/target/secured-service-0.0.1-SNAPSHOT.jar
 java -jar gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar
 ```
 
@@ -94,6 +108,9 @@ mvn spring-boot:run -pl service-a
 
 # For service-b
 mvn spring-boot:run -pl service-b
+
+# For secured-service
+mvn spring-boot:run -pl secured-service
 
 # For gateway-service
 mvn spring-boot:run -pl gateway-service
@@ -123,9 +140,10 @@ mvn spring-boot:run -pl gateway-service
 
 4. 🧩 Project dependencies by Service: 
 	- Config Server: `spring-cloud-config-server`, `spring-boot-starter-web` 
-	- Gateway: `spring-cloud-starter-gateway`, `spring-cloud-starter-netflix-eureka-client`, `OAuth2 Client`
+	- Gateway: `spring-cloud-starter-gateway`, `spring-cloud-starter-config`,  `spring-cloud-starter-netflix-eureka-client`, `spring-boot-starter-oauth2-resource-server`
 	- Service discovery: `spring-cloud-starter-netflix-eureka-server`, `spring-boot-starter-web`  
-	- Services ( service-a, service-b): `spring-boot-starter-web`, `spring-cloud-starter-netflix-eureka-client`, optional: JPA, actuator, etc.
+	- Services ( service-a, service-b): `spring-boot-starter-web`, `spring-cloud-starter-netflix-eureka-client`, `spring-boot-starter-actuator`, `spring-cloud-starter-config`
+   - optional: JPA, actuator, etc.
 
 ## Technology Integration Plan:
 
@@ -162,26 +180,36 @@ mvn spring-boot:run -pl gateway-service
 ###################################
 
 # Service A:
-http://localhost:8989/service-a/props
-http://localhost:8989/service-a/config-maps
+http://localhost:8989/service-a/props # HTTP Methods: GET
+http://localhost:8989/service-a/config-maps # HTTP Methods: GET
 
 # Service B:
-http://localhost:8989/service-b/props
-http://localhost:8989/service-b/config-maps
-http://localhost:8989/service-b/products
+http://localhost:8989/service-b/props # HTTP Methods: GET
+http://localhost:8989/service-b/config-maps # HTTP Methods: GET
+http://localhost:8989/service-b/products # HTTP Methods: GET
+
+# Secured Service:
+http://localhost:8989/secured-service/user # HTTP Methods: GET
+http://localhost:8989/secured-service/admin # HTTP Methods: GET
+http://localhost:8989/secured-service/what-i-can-do # HTTP Methods: GET, POST, PUT, DELETE
 
 #############################
 ### Direct Service Access ###
 #############################
 
 # Service A (Port 8081):
-http://localhost:8081/props
-http://localhost:8081/config-maps
+http://localhost:8081/props # HTTP Methods: GET
+http://localhost:8081/config-maps # HTTP Methods: GET
 
 # Service B (Port 8082):
-http://localhost:8082/props
-http://localhost:8082/config-maps
-http://localhost:8082/products
+http://localhost:8082/props # HTTP Methods: GET
+http://localhost:8082/config-maps # HTTP Methods: GET
+http://localhost:8082/products # HTTP Methods: GET
+
+# Secured Service:
+http://localhost:8983/secured-service/user # HTTP Methods: GET
+http://localhost:8983/secured-service/admin # HTTP Methods: GET
+http://localhost:8983/secured-service/what-i-can-do # HTTP Methods: GET, POST, PUT, DELETE
 ```
  
 
