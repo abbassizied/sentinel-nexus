@@ -7,3 +7,12 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://host.docker.internal:7080/realms/sentinel-nexus-realm
+          # alternatively use jwk-set-uri:
+          # jwk-set-uri: http://host.docker.internal:7080/realms/sentinel-nexus-realm/protocol/openid-connect/certs

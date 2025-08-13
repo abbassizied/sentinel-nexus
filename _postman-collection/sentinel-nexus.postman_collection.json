@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "6446835c-1a17-44bf-83ba-623d6da4157b",
+		"name": "sentinel-nexus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10958206"
+	},
+	"item": [
+		{
+			"name": "Authentication Request",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "sentinel-nexus-client",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "alice",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:7080/realms/sentinel-nexus-realm/protocol/openid-connect/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Token Request",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"addTokenTo": "header"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "sentinel-nexus-client",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "NUY9tPXcyZPZOvyq5G2S7sdmePgxKEeY",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "alice",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:7080/realms/sentinel-nexus-realm/protocol/openid-connect/token"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/service-a/props",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/service-a/props"
+			},
+			"response": []
+		},
+		{
+			"name": "/service-a/config-maps",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/service-a/config-maps"
+			},
+			"response": []
+		},
+		{
+			"name": "/service-b/props",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/service-b/props"
+			},
+			"response": []
+		},
+		{
+			"name": "/service-b/config-maps",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/service-b/config-maps"
+			},
+			"response": []
+		},
+		{
+			"name": "/service-b/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/service-b/products"
+			},
+			"response": []
+		},
+		{
+			"name": "/secured-service/user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/secured-service/user"
+			},
+			"response": []
+		},
+		{
+			"name": "/secured-service/admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/secured-service/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "/secured-service/what-i-can-do",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/secured-service/what-i-can-do"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8989",
+			"type": "default"
+		}
+	]
+}

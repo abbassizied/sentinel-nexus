@@ -77,6 +77,12 @@ mvn install
 
 ## Running a Spring Boot Submodule from the Root Folder
 
+### Start Keycloak
+
+```sh
+docker run -p 127.0.0.1:7080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.3.2 start-dev
+```
+
 ### Option 1: Build and Run the JAR
 
 ```sh
@@ -228,6 +234,15 @@ If you’ve previously built with bad config, rebuild:
 docker-compose down -v --remove-orphans
 docker-compose build --no-cache
 docker-compose up
+```
+
+---
+
+##
+
+- 
+```
+###
 ```
 
 ---
